@@ -5,6 +5,7 @@ var program = require('commander');
 var request = require('request');
 
 var parser = require('./filter').parser;
+var validate = require('./validate').validate;
 var generate = require('./generate').generate;
 
 function loadFieldToTypeAndFormat (mapping, path, fieldToTypeAndFormat) {
@@ -47,11 +48,23 @@ function search (program, fieldToTypeAndFormat) {
     url = host + '/' + program.index + '/_count';
   }
   try {
-    var ast = parser.parse(program.where);
+    var ast = parser.parse(program.filter);
   } catch (err) {
     console.error('DOES NOT PARSE: ' + err);
     process.exit(1);
   }
+  /*
+  try {
+    var result = validate(ast);
+    if (!result[0]) {
+      console.error('DOES NOT VALIDATE: ' + result[1] + ': ' + result[2]);
+      process.exit(1);
+    }
+  } catch (err) {
+    console.error('DOES NOT VALIDATE: ' + err);
+    process.exit(1);
+  }
+  */
   var from = program.offset || 0;
   var size = program.limit || 100;
   try {
@@ -132,7 +145,7 @@ if (!program.index) {
       } else if (Object.keys(mappings).length === 1) {
         var mapping = Object.keys(mappings)[0];
         loadFieldToTypeAndFormat(mappings[mapping], null, fieldToTypeAndFormat);
-        if (program.where === undefined) {
+        if (program.filter === undefined) {
           for (var field of Object.keys(fieldToTypeAndFormat).sort()) {
             var output = [field, fieldToTypeAndFormat[field].type];
             if (fieldToTypeAndFormat[field].format) {

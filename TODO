@@ -1,6 +1,8 @@
 * AST validator: fields and field types
 * AST: "value" op  (could also make AstNode for field)
 
+* date validation
+
 * dates
 * flat AND and flat OR
 * finish AST validator
@@ -23,3 +25,7 @@
 * remove true and false as logical operator arguments
 
 * tunneling
+
+* query support
+
+* aggregation and post filtering support
