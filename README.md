@@ -16,6 +16,23 @@ The tool has been used with Elasticsearch 1.6.
     
 # Run
 
+Usage:
+
+    $ ./query.sh --help
+
+    Usage: query [options]
+
+    Options:
+
+    -h, --help                             output usage information
+    -c, --count                            
+    -F, --fields <comma delimited fields>  
+    -h, --host <elasticsearch host>        
+    -l, --limit <number>                   
+    -o, --offset <number>                  
+    -i, --index <index>                    
+    -f, --filter <filter expression>       
+
 List the idices:
 
     $ ./query.sh
