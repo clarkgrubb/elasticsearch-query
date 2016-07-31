@@ -1,7 +1,31 @@
 const ops = {
   term: {fieldsLength: 1,
          argsLength: 1,
-         types: []}
+         types: []},
+  match: {fieldsLength: 1,
+          argsLength: 1,
+          types: []},
+  regexp: {fieldsLength: 1,
+           argsLength: 1,
+           types: []},
+  range: {fieldsLength: 1,
+          argsLength: 2,
+          types: []},
+  exists: {fieldsLength: 1,
+           argsLength: 0,
+           types: []},
+  and: {fieldsLength: 0,
+        argsLength: 2,
+        types: []},
+  or: {fieldsLength: 0,
+        argsLength: 2,
+        types: []},
+  not: {fieldsLength: 0,
+        argsLength: 1,
+        types: []},
+  empty: {fieldsLength: 0,
+          argsLength: 0,
+          types: []}
 }
 
 function _typeof(value) {

@@ -53,7 +53,6 @@ function search (program, fieldToTypeAndFormat) {
     console.error('DOES NOT PARSE: ' + err);
     process.exit(1);
   }
-  /*
   try {
     var result = validate(ast);
     if (!result[0]) {
@@ -64,7 +63,6 @@ function search (program, fieldToTypeAndFormat) {
     console.error('DOES NOT VALIDATE: ' + err);
     process.exit(1);
   }
-  */
   var from = program.offset || 0;
   var size = program.limit || 100;
   try {
