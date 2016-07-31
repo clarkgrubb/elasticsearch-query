@@ -127,4 +127,4 @@ and_expr = left:bool_expr _ 'and' _ right:and_expr { return {op: "and", args: [l
 or_expr = left:and_expr _ 'or' _ right:or_expr { return {op: "or", args: [left, right], loc: [location().start.offset, location().end.offset]}; }
   / and_expr       
 
-empty = _* { return {op: "empty", text: text(), loc: [location().start.offset, location().end.offset]}; }
+empty = _* { return {op: "empty", loc: [location().start.offset, location().end.offset]}; }
