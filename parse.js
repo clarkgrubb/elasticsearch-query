@@ -2,12 +2,11 @@ require('babel-register');
 require('babel-polyfill');
 
 var program = require('commander');
-var request = require('request');
 
 var parser = require('./filter').parser;
 var generate = require('./generate').generate;
 
-program.option('-w, --where <where expression>')
+program.option('-f, --filter <filter expression>')
   .option('-q, --query')
   .parse(process.argv);
 

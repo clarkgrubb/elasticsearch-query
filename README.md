@@ -18,15 +18,15 @@ The tool has been used with Elasticsearch 1.6.
 
 List the idices:
 
-    $ ./search.sh
+    $ ./query.sh
 
 Show the index fields:
 
-    $ ./search.sh -i stream-v1-55b7cb5416510d372335851d
+    $ ./query.sh -i stream-v1-55b7cb5416510d372335851d
 
 Run an Elasticsearch query:
 
-    $ ./search.sh -w 'actor.activityCount >= 0' -i stream-v1-55b7cb5416510d372335851d
+    $ ./query.sh -f 'actor.activityCount >= 0' -i stream-v1-55b7cb5416510d372335851d
 
 # Filter Language
 
@@ -60,11 +60,11 @@ Using logical operators:
 
 See the AST:
 
-    $ node parse.js -w 'actor.activityCount >= 0'
+    $ node parse.js -f 'actor.activityCount >= 0'
 
 See the Elasticsearch query:
 
-    $ node parse.js -q -w 'actor.activityCount >= 0'
+    $ node parse.js -q -f 'actor.activityCount >= 0'
 
 The `AstNode` type is this:
 
