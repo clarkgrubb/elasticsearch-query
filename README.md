@@ -1,32 +1,24 @@
 # Overview
 
-A filter query parameter parser.
+A command-line tool for querying an Elasticsearch index.  
 
 # Installation
 
+Install Node 4.5 and run this:
+
     $ npm install
-    
+
+The tool has been used with Elasticsearch 1.6.
+
 # Test
 
     $ npm test
     
 # Run
 
-See the AST:
-
-    $ node parse.js -w 'actor.activityCount >= 0'
-
-See the Elasticsearch query:
-
-    $ node parse.js -q -w 'actor.activityCount >= 0'
-
 List the idices:
 
     $ ./search.sh
-
-Another, more information way to list the indices:
-
-    $ ./list-streams.sh bn_api_development
 
 Show the index fields:
 
@@ -65,6 +57,14 @@ Using logical operators:
     title ~ "foo.*" and (actor.activityCount > 10000 or actor.followerCount > 10000)
 
 # Filter AST
+
+See the AST:
+
+    $ node parse.js -w 'actor.activityCount >= 0'
+
+See the Elasticsearch query:
+
+    $ node parse.js -q -w 'actor.activityCount >= 0'
 
 The `AstNode` type is this:
 
