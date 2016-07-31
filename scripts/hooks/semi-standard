@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+#
+# Run Semi Standardjs validation before commit.
+
+files=$(git diff --cached --name-only --diff-filter=ACMR -- *.js **/*.js)
+
+if [ -n "$files" ]; then
+  ./node_modules/.bin/semistandard $files --verbose | ./node_modules/.bin/snazzy
+fi

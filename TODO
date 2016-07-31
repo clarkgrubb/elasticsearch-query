@@ -1,0 +1,25 @@
+* AST validator: fields and field types
+* AST: "value" op  (could also make AstNode for field)
+
+* dates
+* flat AND and flat OR
+* finish AST validator
+
+* = field on either side; also literals on both sides?
+
+* keyword groups
+
+* analyze operator !
+
+* strings sql-style -> backslash (json.org)
+* regular expression notation / / with no string backslashing
+* json for named args
+* wildcard like support
+* range: support date and string type
+* term: support array
+* match: support array
+* wildcard * for all fields
+
+* remove true and false as logical operator arguments
+
+* tunneling

@@ -1,0 +1,130 @@
+start = or_expr / empty
+
+_ "whitespace"
+  = [ \t\r\n\f]+
+
+null = 'null' { return null; }
+
+true = 'true' { return true; }
+
+false = 'false' { return false; }
+
+boolean = true / false
+
+string_char = '""' { return '"'; }
+  / ch:[^"] { return ch; }
+
+string = '"' a:string_char* '"' { return a.reduce((m, o) => m + o); }
+
+float_no_exp_no_lead = sign:[+-]? '.' fraction:[0-9]+ {
+  var sign_str = sign ? sign : '';
+  var fraction_str = fraction.reduce((m, o) => m + o);
+  return parseFloat(sign_str + '.' +  fraction_str);
+}
+
+float_no_exp_lead = sign:[+-]? lead:[0-9]+ '.' fraction:[0-9]* {
+  var sign_str = sign ? sign : '';
+  var lead_str = lead.reduce((m, o) => m + o);
+  var fraction_str = '';
+  if (fraction.length > 0) {
+    fraction_str = fraction.reduce((m, o) => m + o);
+  }
+  return parseFloat(sign_str + lead_str + '.' +  fraction_str);
+}
+
+float_no_exp = float_no_exp_no_lead / float_no_exp_lead
+
+float_exp_no_lead = sign:[+-]? '.' fraction:[0-9]+ [eE] exp_sign:[+-]? exp:[0-9]+ {
+  var sign_str = sign ? sign : '';
+  var fraction_str = fraction.reduce((m, o) => m + o);
+  var exp_sign_str = exp_sign ? exp_sign : '';
+  var exp_str = exp.reduce((m, o) => m + o);
+  return parseFloat(sign_str + '.' +  fraction_str + 'e' + exp_sign_str + exp_str);
+}
+
+float_exp_lead = sign:[+-]? lead:[0-9]+ '.' fraction:[0-9]* [eE] exp_sign:[+-]? exp:[0-9]+ {
+  var sign_str = sign ? sign : '';
+  var lead_str = lead.reduce((m, o) => m + o);
+  var fraction_str = '';
+  if (fraction.length > 0) {
+    fraction_str = fraction.reduce((m, o) => m + o);
+  }
+  var exp_sign_str = exp_sign ? exp_sign : '';
+  var exp_str = exp.reduce((m, o) => m + o);
+  return parseFloat(sign_str + lead_str + '.' +  fraction_str + 'e' + exp_sign_str + exp_str);
+}
+
+float_exp = float_exp_no_lead / float_exp_lead
+
+float = float_exp / float_no_exp
+
+integer = sign:[+-]? digits:[0-9]+ {
+  return parseInt((sign ? sign : '') + digits.reduce((m, o) => m + o));
+}
+
+number = float / integer
+
+value = null / boolean / number / string
+
+identifier = initial:[a-zA-Z_] rest:[a-zA-Z_0-9\.:-]* { return initial + rest.reduce((m, o) => m + o); }
+
+match_expr = str:string _ 'in' _ field:identifier { return {op: "match",
+                                                            fields: [field],
+                                                            args: [str],
+                                                            loc: [location().start.offset,
+                                                                  location().end.offset]}; }
+
+term_expr_str = field:identifier _? '=' _? str:string { return {op: "term",
+                                                                fields: [field],
+                                                                args: [str],
+                                                                loc: [location().start.offset,
+                                                                      location().end.offset]}; }
+
+term_expr_num = field:identifier _? '=' _? val:value { return {op: "term",
+                                                               fields: [field],
+                                                               args: [val],
+                                                               loc: [location().start.offset,
+                                                                     location().end.offset]}; }
+
+term_expr = term_expr_str / term_expr_num
+
+comparison_op = '<=' / '>=' / '<' / '>'
+
+range_expr_num = field:identifier _? op:comparison_op _? num:number { return {op: "range",
+                                                                              fields: [field],
+                                                                              args: [op, num],
+                                                                              loc: [location().start.offset,
+                                                                                    location().end.offset]}; }
+
+range_expr_str = field:identifier _? op:comparison_op _? str:string { return {op: "range",
+                                                                              fields: [field],
+                                                                              args: [op, str],
+                                                                              loc: [location().start.offset,
+                                                                                    location().end.offset]}; }
+
+range_expr = range_expr_num / range_expr_str
+
+exists_expr = 'exists' _ field:identifier { return {op: "exists",
+                                                    fields: [field],
+                                                    loc: [location().start.offset,
+                                                          location().end.offset]}; }
+
+regexp_expr = field:identifier _? '~' _? str:string { return {op: "regexp",
+                                                              fields: [field],
+                                                              args: [str],
+                                                              loc: location()}; }
+
+predicate = match_expr / term_expr / range_expr / exists_expr / regexp_expr
+
+bool_expr = boolean
+  / predicate
+  / 'not' _ arg:bool_expr { return {op: "not", args: [arg], loc: [location().start.offset,location().end.offset]}; }
+  / '(' _? arg:or_expr _? ')' { return arg; }
+
+and_expr = left:bool_expr _ 'and' _ right:and_expr { return {op: "and", args: [left, right], loc: [location().start.offset, location().end.offset]}; }
+  / bool_expr
+
+or_expr = left:and_expr _ 'or' _ right:or_expr { return {op: "or", args: [left, right], loc: [location().start.offset, location().end.offset]}; }
+  / and_expr       
+
+empty = _* { return {op: "empty", text: text(), loc: [location().start.offset, location().end.offset]}; }
