@@ -5,7 +5,8 @@
   "description": "Command-Line Elasticsearch Query Tool",
   "scripts": {
     "test": "./scripts/test",
-    "posttest": "./scripts/hooks/semi-standard"
+    "posttest": "./scripts/hooks/semi-standard",
+    "load-fixtures": "./scripts/load-fixtures"
   },
   "main": "index.js",
   "repository": {

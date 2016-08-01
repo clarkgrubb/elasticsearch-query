@@ -1,0 +1,206 @@
+{
+  "stream-v1-55b7cb5416510d372335851d": {
+    "mappings": {
+      "activities": {
+        "dynamic": "false",
+        "_all": {
+          "enabled": false
+        },
+        "_routing": {
+          "path": "actor.displayName"
+        },
+        "_timestamp": {
+          "enabled": true
+        },
+        "properties": {
+          "actor": {
+            "properties": {
+              "activityCount": {
+                "type": "long"
+              },
+              "description": {
+                "type": "string"
+              },
+              "displayName": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "followerCount": {
+                "type": "long"
+              },
+              "followingCount": {
+                "type": "long"
+              },
+              "id": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "image": {
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "location": {
+                "type": "string"
+              },
+              "messagesPerDay": {
+                "type": "double"
+              },
+              "name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "objectType": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "originalId": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "url": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "id": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "object": {
+            "properties": {
+              "content": {
+                "type": "string",
+                "analyzer": "social_media_ugc_analyzer"
+              },
+              "displayName": {
+                "type": "string"
+              },
+              "fullImage": {
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "id": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "image": {
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "objectType": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "repostedAuthor": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "repostedId": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "rootId": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "stream": {
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "index": "not_analyzed"
+                  }
+                }
+              },
+              "summary": {
+                "type": "string"
+              },
+              "targetUrl": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "originalId": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "place": {
+            "properties": {
+              "city_name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "country_code": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "country_name": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "latitude": {
+                "type": "float"
+              },
+              "longitude": {
+                "type": "float"
+              },
+              "us_state": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "provider": {
+            "properties": {
+              "displayName": {
+                "type": "string",
+                "index": "not_analyzed"
+              },
+              "id": {
+                "type": "string",
+                "analyzer": "lowercase_keyword"
+              },
+              "url": {
+                "type": "string",
+                "index": "not_analyzed"
+              }
+            }
+          },
+          "published": {
+            "type": "date",
+            "format": "dateOptionalTime"
+          },
+          "publishedTs": {
+            "type": "date",
+            "format": "dateOptionalTime"
+          },
+          "title": {
+            "type": "string",
+            "analyzer": "social_media_ugc_analyzer"
+          },
+          "url": {
+            "type": "string",
+            "index": "not_analyzed"
+          },
+          "verb": {
+            "type": "string",
+            "index": "not_analyzed"
+          }
+        }
+      }
+    }
+  }
+}

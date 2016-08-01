@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -eu -o pipefail
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+host=localhost:9200
+index=test
+uploadfile=$(mktemp)
+datadir="${dir}/../data"
+mappingfile="${datadir}/tweet.json"
+fixturefile="${datadir}/fixture.json.gz"
+
+function cleanup {
+    rm -f "$uploadfile"
+}
+
+trap cleanup ERR
+
+echo "CREATING upload file"
+gzcat "$fixturefile" \
+  | jq -c '{"index": {"_index": "'${index}'", "_type": "tweet", "_id": "\(.id)"}}, .' \
+  > "$uploadfile"
+
+echo "DELETING index /test"
+curl -s -XDELETE "http://${host}/${index}" > /dev/null || true
+
+echo "PUTTING index"
+curl -s -XPUT "http://${host}/${index}" > /dev/null
+
+echo "PUTTING mapping tweet"
+curl -s -XPUT "http://${host}/${index}/tweet/_mapping" -d "@${mappingfile}" > /dev/null
+
+echo "POSTING data to index /test"
+curl -s -XPOST "http://${host}/_bulk" --data-binary "@${uploadfile}" > /dev/null; echo
+
+cleanup
