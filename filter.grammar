@@ -114,7 +114,12 @@ regexp_expr = field:identifier _? '~' _? str:string { return {op: "regexp",
                                                               args: [str],
                                                               loc: location()}; }
 
-predicate = match_expr / term_expr / range_expr / exists_expr / regexp_expr
+wildcard_expr = field:identifier _? 'like' _? str:string { return {op: "wildcard",
+                                                                  fields: [field],
+                                                                  args: [str],
+                                                                  loc: location()}; }
+
+predicate = match_expr / term_expr / range_expr / exists_expr / regexp_expr / wildcard_expr
 
 bool_expr = boolean
   / predicate

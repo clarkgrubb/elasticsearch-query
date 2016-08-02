@@ -39,6 +39,11 @@ export function generate (ast) {
     regexp_arg[ast.fields[0]] = ast.args[0];
     return {regexp: regexp_arg};
 
+  } else if (ast.op === 'wildcard') {
+    const wildcard_arg = {};
+    wildcard_arg[ast.fields[0]] = ast.args[0];
+    return {query: {wildcard: wildcard_arg}};
+
   } else if (ast.op === 'and') {
     // TODO: what if any args are booleans
     // TODO: what if only one arg
