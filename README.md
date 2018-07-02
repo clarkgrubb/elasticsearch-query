@@ -33,7 +33,7 @@ Usage:
     -i, --index <index>                    
     -f, --filter <filter expression>       
 
-List the idices:
+List the indices:
 
     $ ./query.sh
 
