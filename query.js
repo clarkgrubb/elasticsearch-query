@@ -135,7 +135,7 @@ if (!program.index) {
     if (!error && response.statusCode === 200) {
       const mappings = JSON.parse(body)[program.index].mappings;
       if (Object.keys(mappings).length > 1) {
-        mappings.forEach((mapping) => {
+        Object.values(mappings).forEach((mapping) => {
           console.log(mapping);
         });
         console.log('ERROR: no multiple mapping support.');
